@@ -4,7 +4,7 @@ public:
     int sumSubarrayMins(vector<int>& arr) {
         int n = arr.size();
 
-        auto pse = [&](vector<int> arr) {
+        auto pse = [&](vector<int>& arr) {
             int n = arr.size();
 
             vector<int> res(n, -1);
@@ -22,7 +22,7 @@ public:
             return res;
         };
 
-        auto nse = [&](vector<int> arr) {
+        auto nse = [&](vector<int>& arr) {
             int n = arr.size();
             
             vector<int> res(n, n);
