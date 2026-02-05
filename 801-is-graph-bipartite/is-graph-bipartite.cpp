@@ -19,6 +19,33 @@ public:
         return true;
     }
 
+    bool checkBFS(vector<vector<int>>& graph, int curr, vector<int>& color, int col)
+    {
+        if(color[curr] == -1)
+            color[curr] = col;
+
+        queue<int> q;
+        q.push(curr);
+
+        while(!q.empty())
+        {
+            int u = q.front();
+            q.pop();
+
+            for(int v:graph[u])
+            {
+                if(color[v] == color[u])       // adjacent nodes have the same color
+                    return false;
+                else if(color[v] == -1)
+                {
+                    color[v] = 1 - color[u];
+                    q.push(v);
+                }
+            }
+        }
+        return true;
+    }
+
     bool isBipartite(vector<vector<int>>& graph) {
         int V = graph.size();
 
@@ -28,7 +55,7 @@ public:
         {
             if(color[u] == -1)
             {
-                if(checkDFS(graph, u, color, 0) == false)
+                if(checkBFS(graph, u, color, 1) == false)
                     return false;
             }
         }
