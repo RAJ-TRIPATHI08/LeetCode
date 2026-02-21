@@ -48,25 +48,45 @@ public:
     int makeConnected(int n, vector<vector<int>>& connections) {
         if(connections.size() < n-1) return -1;
 
-        unordered_map<int, vector<int>> adj(n);
-        vector<bool> vis(n, false);
+        // unordered_map<int, vector<int>> adj(n);
+        // vector<bool> vis(n, false);
         
-        for(auto p:connections)
-        {
-            adj[p[0]].push_back(p[1]);
-            adj[p[1]].push_back(p[0]);
-        }
+        // for(auto p:connections)
+        // {
+        //     adj[p[0]].push_back(p[1]);
+        //     adj[p[1]].push_back(p[0]);
+        // }
 
-        int cnt = 0;
-        for(int u = 0; u < n; u++)
+        // int cnt = 0;
+        // for(int u = 0; u < n; u++)
+        // {
+        //     if(!vis[u])
+        //     {
+        //         cnt++;
+        //         dfs(adj, u, vis);
+        //     }
+        // }
+
+        // return cnt - 1;
+
+        par.resize(n);
+        rank.resize(n, 0);
+
+        for(int i = 0; i < n; i++)
+            par[i] = i;
+
+        for(auto vec: connections)
         {
-            if(!vis[u])
+            int a = find(vec[0]);
+            int b = find(vec[1]);
+
+            if(a != b) 
             {
-                cnt++;
-                dfs(adj, u, vis);
+                unionSet(a, b);
+                n--;
             }
         }
 
-        return cnt - 1;
+        return n - 1;
     }
 };
