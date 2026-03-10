@@ -1,40 +1,44 @@
 class Solution {
 public:
-    int numberOfStableArrays(int zero, int one, int limit) {
-        static int MOD = 1e9 + 7;
-        vector<vector<int>> dp0(zero + 1, vector<int>(one + 1, 0));
-        vector<vector<int>> dp1(zero + 1, vector<int>(one + 1, 0));
+    int mod = 1e9 + 7;
+    int dp[1001][1001][2];
 
-        for (int i = 1; i <= min(zero, limit); i++) {
-            dp0[i][0] = 1;
-        }   
+    int solve(int one, int zero, bool lastWasOne, int limit)
+    {
+        if(one == 0 && zero == 0)
+            return 1;
 
-        for (int j = 1; j <= min(one, limit); j++) {
-            dp1[0][j] = 1;
-        }
+        if(dp[one][zero][lastWasOne] != -1)
+            return dp[one][zero][lastWasOne];
 
-        for (int i = 1; i <= zero; i++) {
-            for (int j = 1; j <= one; j++) {
-                // dp0[i][j]:
-                // Add one more zero to states with (i-1, j),
-                // then remove the invalid states where the zero-run becomes > limit
-                long long val0 = (long long)dp0[i - 1][j] + dp1[i - 1][j];
-                if (i - limit - 1 >= 0) {
-                    val0 -= dp1[i - limit - 1][j];
-                }
-                dp0[i][j] = (val0 % MOD + MOD) % MOD;
+        long long res = 0;
 
-                // dp1[i][j]:
-                // Add one more one to states with (i, j-1),
-                // then remove the invalid states where the one-run becomes > limit
-                long long val1 = (long long)dp0[i][j - 1] + dp1[i][j - 1];
-                if (j - limit - 1 >= 0) {
-                    val1 -= dp0[i][j - limit - 1];
-                }
-                dp1[i][j] = (val1 % MOD + MOD) % MOD;
+        if(lastWasOne)
+        {
+            // go with zero's streak
+            for(int len = 1; len <= min(zero, limit); len++)
+            {
+                res = (res + solve(one, zero - len, false, limit)) % mod;
             }
-            
         }
-        return ((long long)dp0[zero][one] + dp1[zero][one]) % MOD;
+        else
+        {
+            // last was zero, continue with one's streak
+            for(int len = 1; len <= min(one, limit); len++)
+            {
+                res = (res + solve(one - len, zero, true, limit)) % mod;
+            }
+        }
+
+        return dp[one][zero][lastWasOne] = res;
+    }
+
+    int numberOfStableArrays(int zero, int one, int limit) {
+        memset(dp, -1, sizeof(dp));
+
+        int startWithOne = solve(one, zero, true, limit);
+        int startWithZero = solve(one, zero, false, limit);
+
+        return (startWithOne + startWithZero) % mod;
     }
 };
