@@ -1,27 +1,30 @@
 class Solution {
 public:
-    vector<string> ans;
-    void solve(int n, string s)
+    string res;
+    int cnt = 0;
+    void solve(int n, string s, int k)
     {
         if(s.size() == n)
         {
-            ans.push_back(s);
+            cnt++;
+            if(cnt == k)
+            {
+                res = s;
+                return;
+            }
+            s = "";
             return;
         }
 
         for(char ch : {'a','b','c'})
         {
             if(s.empty() || s.back() != ch)
-                solve(n, s+ch);
+                solve(n, s+ch, k);
         }
     }
 
     string getHappyString(int n, int k) {
-        solve(n, "");
-        sort(ans.begin(), ans.end());
-        if(k > ans.size())
-            return "";
-        
-        return ans[k-1];
+        solve(n, "", k);
+        return  res;
     }
 };
