@@ -8,35 +8,26 @@ public:
         int m = grid[0].size();
         vector<vector<int>> p(n, vector<int>(m, 0));
 
-        int size = n*m;
+        ll suffix = 1;
 
-        vector<int> arr;
-        for(auto &row : grid)
+        for(int i = n - 1; i >= 0; i--)
         {
-            for(int x : row)
+            for(int j = m - 1; j >= 0; j--)
             {
-                arr.push_back(x);
+                p[i][j] = suffix;
+                suffix = (suffix * grid[i][j]) % mod;
             }
         }
 
-        vector<ll> prefix(size, 1);
-        vector<ll> suffix(size, 1);
+        ll prefix = 1;
 
-        for(int i = 1; i < size; i++)
+        for(int i = 0; i < n; i++)
         {
-            prefix[i] = (prefix[i-1] * arr[i-1]) % mod;
-            cout << prefix[i] << endl;
-        }
-
-        for(int i = size - 2; i >= 0; i--)
-        {
-            suffix[i] = (suffix[i+1] * arr[i+1]) % mod;
-            cout << suffix[i] << endl;
-        }
-
-        for(int i = 0; i < size; i++)
-        {
-            p[i/m][i%m] = (prefix[i] * suffix[i])%mod;
+            for(int j = 0; j < m; j++)
+            {
+                p[i][j] = (prefix * p[i][j]) % mod;
+                prefix = (prefix * grid[i][j]) % mod; 
+            }
         }
         
         return p;
