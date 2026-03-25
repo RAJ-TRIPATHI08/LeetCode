@@ -2,7 +2,7 @@ class Solution {
 public:
     int rob(vector<int>& nums) {
         int n = nums.size();
-        int dp[n+1];
+        int dp[102];
 
         memset(dp, 0, sizeof(dp));
 
