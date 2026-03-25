@@ -1,23 +1,21 @@
 class Solution {
 public:
-    int dp[101];
-    int solve(vector<int>& nums, int idx)
-    {
-        if(idx >= nums.size())
-            return 0;
-
-        if(dp[idx] != -1)
-            return dp[idx];
-
-        int pick = nums[idx] + solve(nums, idx + 2);
-        int notpick = solve(nums, idx + 1);
-        return dp[idx] = max(pick, notpick);
-    }
-
     int rob(vector<int>& nums) {
         int n = nums.size();
-        memset(dp, -1, sizeof(dp));
+        int dp[n+1];
 
-        return solve(nums, 0);
+        memset(dp, 0, sizeof(dp));
+
+        dp[0] = 0;
+        dp[1] = nums[0];
+        for(int i = 2; i <= n; i++)
+        {
+            int pick = nums[i-1] + dp[i-2];
+            int notPick = dp[i-1];
+
+            dp[i] = max(pick, notPick);
+        }
+
+        return dp[n];
     }
 };
