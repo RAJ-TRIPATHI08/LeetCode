@@ -1,6 +1,6 @@
 class Solution {
 public:
-    vector<int> dp;
+    int dp[101];
     int solve(vector<int>& nums, int idx)
     {
         if(idx >= nums.size())
@@ -16,7 +16,7 @@ public:
 
     int rob(vector<int>& nums) {
         int n = nums.size();
-        dp.resize(n, -1);
+        memset(dp, -1, sizeof(dp));
 
         return solve(nums, 0);
     }
