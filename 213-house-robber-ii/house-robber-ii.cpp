@@ -1,16 +1,16 @@
 class Solution {
 public:
     int dp[101];
-    int solve(vector<int>& nums, int i, int j)
+    int solve(vector<int>& nums, int i, int n)
     {
-        if(i > j)
+        if(i > n)
             return 0;
 
         if(dp[i] != -1)
             return dp[i];
         
-        int pick = nums[i] + solve(nums, i+2, j);
-        int notpick = solve(nums, i+1, j);
+        int pick = nums[i] + solve(nums, i+2, n);
+        int notpick = solve(nums, i+1, n);
         
         return dp[i] = max(pick, notpick);
     }
