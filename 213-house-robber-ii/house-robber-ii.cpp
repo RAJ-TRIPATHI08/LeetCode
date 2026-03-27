@@ -1,37 +1,40 @@
 class Solution {
 public:
-    int dp[101];
-    int solve(vector<int>& nums, int i, int n)
-    {
-        if(i > n)
-            return 0;
-
-        if(dp[i] != -1)
-            return dp[i];
-        
-        int pick = nums[i] + solve(nums, i+2, n);
-        int notpick = solve(nums, i+1, n);
-        
-        return dp[i] = max(pick, notpick);
-    }
-
     int rob(vector<int>& nums) {
         int n = nums.size();
-
         if(n == 1)
             return nums[0];
-    
-        if(n == 2)
-            return max(nums[0], nums[1]);
 
-        memset(dp, -1, sizeof(dp));
+        vector<int> dp(n+1, 0);
 
-        int take0thIdx = solve(nums, 0, n - 2);
+        dp[0] = 0;
 
-        memset(dp, -1, sizeof(dp));
+        // case1: if we take first house
+        for(int i = 1; i <= n - 1; i++)
+        {
+            int skip = dp[i-1];
+            int take = nums[i-1] + ((i-2 >= 0)? dp[i-2] : 0);
 
-        int take1stIdx = solve(nums, 1, n - 1);
- 
-        return max(take0thIdx, take1stIdx);
+            dp[i] = max(skip, take);
+        }
+
+        int res1 = dp[n-1];
+        dp.clear();
+
+        // case2: if we do not take first house
+        dp[0] = 0;
+        dp[1] = 0;
+
+        
+        for(int i = 2; i <= n; i++)
+        {
+            int skip = dp[i-1];
+            int take = nums[i-1] + ((i-2 >= 0)? dp[i-2] : 0);
+
+            dp[i] = max(skip, take);
+        }
+
+        int res2 = dp[n];
+        return max(res1, res2);
     }
 };
