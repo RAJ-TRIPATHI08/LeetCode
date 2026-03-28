@@ -17,12 +17,12 @@ public:
 
         vector<vector<int>> res(n, vector<int>(n, INT_MAX));
 
-        priority_queue<P, vector<P>, greater<P>> pq;
+        queue<P> pq;
         pq.push({0, {0, 0}});
         res[0][0] = 0;
 
         while (!pq.empty()) {
-            auto curr = pq.top();
+            auto curr = pq.front();
             pq.pop();
             int d = curr.first;
             pair<int, int> p = curr.second;
