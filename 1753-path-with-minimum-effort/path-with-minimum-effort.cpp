@@ -28,6 +28,13 @@ public:
             int x = p.first;
             int y = p.second;
 
+            if(x == m-1 && y == n-1)
+                return diff;
+
+            if(diff > res[x][y]) 
+                continue;
+
+
             for(auto dir : directions)
             {
                 int x_ = x + dir[0];
