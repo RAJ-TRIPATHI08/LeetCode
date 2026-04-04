@@ -1,16 +1,21 @@
 class Solution {
 public:
     int countCompleteDayPairs(vector<int>& hours) {
+        unordered_map<int, int> mp; // {rem, freq};
         int res = 0;
-        int n = hours.size();
 
-        for(int i = 0; i < n; i++)
+        for(int hr : hours)
         {
-            for(int j = i+1; j < n; j++)
+            int rem = hr % 24;
+            if(rem == 0)
             {
-                if((hours[i] + hours[j]) % 24 == 0)
-                    res++;
+                res += mp[rem];
             }
+            else
+            {
+                res += mp[24-rem];
+            }
+            mp[rem]++;
         }
 
         return res;
