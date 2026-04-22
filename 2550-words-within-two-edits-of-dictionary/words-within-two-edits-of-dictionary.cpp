@@ -6,12 +6,10 @@ public:
         int n = queries.size();
         int m = dictionary.size();
         
-        for(int i = 0; i < n; i++)
+        for(string s : queries)
         {
-            string s = queries[i];
-            for(int j = 0; j < m; j++)
+            for(string t : dictionary)
             {
-                string t = dictionary[j];
                 if(s == t)
                 {
                     res.push_back(s);
