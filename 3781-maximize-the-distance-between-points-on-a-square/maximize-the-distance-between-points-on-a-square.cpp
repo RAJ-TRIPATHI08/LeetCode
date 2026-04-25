@@ -76,7 +76,5 @@ public:
         }
 
         return result;
-
-
     }
 };
