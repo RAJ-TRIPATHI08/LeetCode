@@ -10,7 +10,8 @@ public:
 
         vector<int> res;
 
-        for(int num = 100; num <= 998; num += 2) {
+        for(int num = 100; num <= 998; num += 2) 
+        {
             int x = num;
             vector<int> cnt(10, 0);
 
@@ -19,14 +20,17 @@ public:
             cnt[x % 10]++;
 
             bool valid = true;
-            for(int d = 0; d < 10; d++) {
-                if(cnt[d] > freq[d]) {
+            for(int d = 0; d < 10; d++) 
+            {
+                if(cnt[d] > freq[d]) 
+                {
                     valid = false;
                     break;
                 }
             }
 
-            if(valid) {
+            if(valid) 
+            {
                 res.push_back(num);
             }
         }
