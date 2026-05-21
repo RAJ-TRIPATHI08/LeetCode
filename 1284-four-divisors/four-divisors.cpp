@@ -1,7 +1,6 @@
 class Solution {
 public:
     int sumFourDivisors(vector<int>& nums) {
-
         int res = 0;
 
         for(int n : nums)
