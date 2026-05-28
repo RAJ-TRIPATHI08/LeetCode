@@ -4,6 +4,12 @@ public:
     public:
         bool isEndOfWord;
         trieNode* children[26];
+
+        ~trieNode()
+        {
+            for(int i = 0; i < 26; i++)
+                delete children[i];
+        }
     };
 
     trieNode* getNode()
