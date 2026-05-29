@@ -13,13 +13,13 @@ public:
     };
 
     trieNode* getNode(int i) {
-        trieNode* temp = new trieNode();
-        temp->idx = i;
+        trieNode* newNode = new trieNode();
+        newNode->idx = i;
 
         for(int i = 0; i<26; i++) {
-            temp->children[i] = NULL;
+            newNode->children[i] = NULL;
         }
-        return temp;
+        return newNode;
     }
 
     void insertTrie(trieNode* pCrawl, int i, vector<string>& wordsContainer) {
