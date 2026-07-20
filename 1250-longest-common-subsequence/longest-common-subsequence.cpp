@@ -1,26 +1,27 @@
 class Solution {
-private:
-    int dp[1001][1001];
-    int solve(string &s1, string &s2, int i, int j)
+public:
+    vector<vector<int>> dp;
+    int n, m;
+
+    int solve(int i, int j, string &s, string &t)
     {
-        if(i >= s1.length() || j >= s2.length())
+        if(i >= n || j >= m)
             return 0;
 
-        if(dp[i][j] != -1) 
+        if(dp[i][j] != -1)
             return dp[i][j];
 
-        if(s1[i] == s2[j])
-            return dp[i][j] = 1 + solve(s1, s2, i+1, j+1);
+        if(s[i] == t[j])
+            return dp[i][j] = 1 + solve(i+1, j+1, s, t);
         
-        return dp[i][j] = max(solve(s1, s2, i+1, j), solve(s1, s2, i, j+1));
+        return dp[i][j] = max(solve(i+1, j, s, t), solve(i, j+1, s, t));
     }
 
-public:
-    int longestCommonSubsequence(string s1, string s2) {
-        int m = s1.size(), n = s2.size();
+    int longestCommonSubsequence(string s, string t) {
+        this->n = s.size();
+        this->m = t.size();
 
-        memset(dp, -1, sizeof(dp));
-
-        return solve(s1, s2, 0, 0);
+        dp.resize(n+1, vector<int>(m+1, -1));
+        return solve(0, 0, s, t);
     }
 };
