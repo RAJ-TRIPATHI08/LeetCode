@@ -2,8 +2,6 @@
 
 # 🚀 LeetCode Solutions
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=28&pause=1000&color=00F7FF&center=true&vCenter=true&width=600&lines=Welcome+to+my+LeetCode+Journey!;C%2B%2B+%7C+DSA+%7C+Problem+Solving;Consistency+beats+Talent+💯" alt="Typing SVG" />
-
 <p>
   <img src="https://img.shields.io/badge/Language-C%2B%2B-blue?style=for-the-badge&logo=cplusplus"/>
   <img src="https://img.shields.io/badge/Platform-LeetCode-orange?style=for-the-badge&logo=leetcode"/>
@@ -110,8 +108,6 @@ It motivates me to keep solving more problems.
 <div align="center">
 
 ## ⭐ Happy Coding ⭐
-
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=36BCF7&center=true&vCenter=true&width=500&lines=Keep+Learning.;Keep+Building.;Keep+Solving.;Never+Give+Up.🚀" />
 
 Made with ❤️ by **Raj Tripathi**
 
