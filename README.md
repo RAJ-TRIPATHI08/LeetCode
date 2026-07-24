@@ -91,7 +91,7 @@ The goal of this repository is to:
 
 ### LeetCode
 
-Add your profile here:
+
 
 ```
   https://leetcode.com/u/rajtripathi08/
