@@ -31,6 +31,7 @@ public:
         {
             mp[key].second = value;
             makeRecentlyUsed(key);
+            return;
         }
         else
         {
