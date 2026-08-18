@@ -10,10 +10,11 @@ public:
             unordered_set<int> seen;
             for (int j = i; j < i + k; j++) 
                 seen.insert(nums[j]);
-                
+
             for (int val : seen) 
                 cnt[val]++;
         }
+        
         int res = -1;
         for(auto p : cnt)
             if(p.second == 1)
