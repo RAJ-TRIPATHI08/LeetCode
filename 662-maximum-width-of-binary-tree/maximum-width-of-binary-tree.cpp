@@ -11,7 +11,7 @@
  */
 class Solution {
 public:
-    typedef unsigned long long ll;
+    using ll = unsigned long long;
     int widthOfBinaryTree(TreeNode* root) {
         vector<int> tree;
 
