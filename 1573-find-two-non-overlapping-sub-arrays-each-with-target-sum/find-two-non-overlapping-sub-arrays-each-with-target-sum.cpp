@@ -5,16 +5,16 @@ public:
         int i = 0;
         int j = 0;
 
-        int minLen = INT_MAX, minLen1 = INT_MAX;
         int res = INT_MAX;
         int bestLen = INT_MAX;
         int sum = 0;
+
         vector<int> dp(n, INT_MAX);
         while(j < n)
         {
             sum += arr[j];
 
-            while(sum > target && i < j)
+            while(sum > target && i <= j)
             {
                 sum -= arr[i];
                 i++;
@@ -33,9 +33,8 @@ public:
             j++;
         }
 
-        if(res == INT_MAX)
-            return -1;
+        
 
-        return res;
+        return res != INT_MAX? res : -1;
     }
 };
