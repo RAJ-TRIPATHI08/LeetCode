@@ -2,17 +2,22 @@ class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
         int n = nums.size();
-
-        vector<int> dp(n+1, 1);
+        vector<int> sorted;
 
         for(int i = 0; i < n; i++)
         {
-            for(int j = 0; j < i; j++)
+            auto it = lower_bound(begin(sorted), end(sorted), nums[i]);
+
+            if(it == end(sorted))
             {
-                if(nums[j] < nums[i])   // it can be added to LIS
-                    dp[i] = max(dp[i], dp[j] + 1);
+                sorted.push_back(nums[i]);
+            }
+            else
+            {
+                *it = nums[i];
             }
         }
-        return *max_element(begin(dp), end(dp));
+
+        return sorted.size();
     }
 };
