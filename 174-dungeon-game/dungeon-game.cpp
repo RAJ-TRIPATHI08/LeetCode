@@ -1,36 +1,34 @@
 class Solution {
 public:
-    int m, n;
-    
-    int dp[201][201];
-    int solve(int i, int j, vector<vector<int>>& g)
-    {
-        if(i >= m || j >= n)
-            return INT_MAX;
-        
-        if(i == m - 1 && j == n - 1)
+    int calculateMinimumHP(vector<vector<int>>& dungeon) {
+        int m = dungeon.size();
+        int n = dungeon[0].size();
+
+        int dp[201][201];
+        memset(dp, 0, sizeof(dp));
+
+        for(int i = m - 1; i >= 0; i--)
         {
-            if(g[i][j] > 0)
-                return 1;
-            return abs(g[i][j]) + 1;
+            for(int j = n - 1; j >= 0; j--)
+            {
+                if(i == m - 1 && j == n - 1)
+                {
+                    if(dungeon[i][j] > 0)
+                        dp[i][j] = 1;
+                    else
+                        dp[i][j] = abs(dungeon[i][j]) + 1;
+                }
+                else
+                {
+                    int right = (j + 1 < n) ? dp[i][j + 1] : INT_MAX;
+                    int down = (i + 1 < m) ? dp[i + 1][j] : INT_MAX;
+
+                    int res = min(right, down) - dungeon[i][j];
+                    dp[i][j] = res > 0 ? res : 1;
+                }
+            }
         }
 
-        if(dp[i][j] != -1)
-            return dp[i][j];
-
-        int right = solve(i, j + 1, g);
-        int down = solve(i + 1, j, g);
-
-        int res = min(right, down) - g[i][j];
-        return dp[i][j] = res > 0? res : 1;
-    }
-    
-    int calculateMinimumHP(vector<vector<int>>& dungeon)
-    {
-        m = dungeon.size();
-        n = dungeon[0].size();
-        memset(dp, -1, sizeof(dp));
-
-        return solve(0, 0, dungeon);
+        return dp[0][0];
     }
 };
