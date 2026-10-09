@@ -25,12 +25,6 @@ public:
                 if(j + 1 < n)
                     dp[i][j + 1] = max(dp[i][j + 1],
                                          dp[i][j] + g[i][j + 1]);
-
-                if(i + 1 < m && dp[i + 1][j] <= 0)
-                    dp[i + 1][j] = 0;
-
-                if(j + 1 < n && dp[i][j + 1] <= 0)
-                    dp[i][j + 1] = 0;
             }
         }
 
