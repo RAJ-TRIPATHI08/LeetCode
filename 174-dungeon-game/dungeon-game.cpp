@@ -19,12 +19,10 @@ public:
                     continue;
 
                 if(i + 1 < m)
-                    dp[i + 1][j] = max(dp[i + 1][j],
-                                         dp[i][j] + g[i + 1][j]);
+                    dp[i + 1][j] = max(dp[i + 1][j], dp[i][j] + g[i + 1][j]);
 
                 if(j + 1 < n)
-                    dp[i][j + 1] = max(dp[i][j + 1],
-                                         dp[i][j] + g[i][j + 1]);
+                    dp[i][j + 1] = max(dp[i][j + 1], dp[i][j] + g[i][j + 1]);
             }
         }
 
