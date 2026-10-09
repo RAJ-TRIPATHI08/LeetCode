@@ -1,55 +1,36 @@
 class Solution {
 public:
     int m, n;
-
-    bool check(int HP, vector<vector<int>>& g)
+    
+    int dp[201][201];
+    int solve(int i, int j, vector<vector<int>>& g)
     {
-        vector<vector<int>> dp(m, vector<int>(n, 0));
-
-        dp[0][0] = HP + g[0][0];
-
-        if(dp[0][0] <= 0)
-            return false;
-
-        for(int i = 0; i < m; i++)
+        if(i >= m || j >= n)
+            return INT_MAX;
+        
+        if(i == m - 1 && j == n - 1)
         {
-            for(int j = 0; j < n; j++)
-            {
-                if(dp[i][j] <= 0)
-                    continue;
-
-                if(i + 1 < m)
-                    dp[i + 1][j] = max(dp[i + 1][j], dp[i][j] + g[i + 1][j]);
-
-                if(j + 1 < n)
-                    dp[i][j + 1] = max(dp[i][j + 1], dp[i][j] + g[i][j + 1]);
-            }
+            if(g[i][j] > 0)
+                return 1;
+            return abs(g[i][j]) + 1;
         }
 
-        return dp[m - 1][n - 1] > 0;
-    }
+        if(dp[i][j] != -1)
+            return dp[i][j];
 
+        int right = solve(i, j + 1, g);
+        int down = solve(i + 1, j, g);
+
+        int res = min(right, down) - g[i][j];
+        return dp[i][j] = res > 0? res : 1;
+    }
+    
     int calculateMinimumHP(vector<vector<int>>& dungeon)
     {
         m = dungeon.size();
         n = dungeon[0].size();
+        memset(dp, -1, sizeof(dp));
 
-        int l = 1, r = 4 * 1e7 + 1;
-        int res = r;
-
-        while(l <= r)
-        {
-            int mid = l + (r - l) / 2;
-
-            if(check(mid, dungeon))
-            {
-                res = mid;
-                r = mid - 1;
-            }
-            else
-                l = mid + 1;
-        }
-
-        return res;
+        return solve(0, 0, dungeon);
     }
 };
