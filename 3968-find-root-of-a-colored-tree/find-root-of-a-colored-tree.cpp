@@ -1,110 +1,48 @@
 class Solution {
 public:
-    bool check(int node, int par, vector<int> adj[], vector<int>& color) {
+    int findColoredRoot(vector<vector<int>>& edges, string col) {
+        int n = edges.size() + 1;
+        map<char, char> mp;
+        mp['R'] = 'B';
+        mp['B'] = 'W';
+        mp['W'] = 'R';
 
-        if (par != -1) {
+        unordered_map<int, vector<int>> adj;
+        vector<int> inDegree(n, 0);
 
-            if (color[node] == color[par] ||
-                color[node] != (color[par] + 1) % 3) {
-                return false;
-            }
-        }
-
-        for (int child : adj[node]) {
-
-            if (child != par) {
-
-                if (color[child] == color[node] ||
-                    color[child] != (color[node] + 1) % 3) {
-                    return false;
-                }
-
-                if (!check(child, node, adj, color)) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-    int findColoredRoot(vector<vector<int>>& edges, string colors) {
-        int n = colors.size();
-        vector<int> adj[n];
-        vector<int> color(n);
-
-        for (int i = 0; i < n; i++) {
-            if (colors[i] == 'R') {
-                color[i] = 0;
-            } else if (colors[i] == 'B') {
-                color[i] = 1;
-            } else {
-                color[i] = 2;
-            }
-        }
-
-        for (auto i : edges) {
-            int u = i[0];
-            int v = i[1];
-            adj[u].push_back(v);
-            adj[v].push_back(u);
-        }
-
-        int root = -1;
-
-        vector<int> possibles;
-
-        for (int i = 0; i < n; i++) {
-            unordered_map<char, int> mp;
-            mp[colors[i]] = 1;
-
-            for (int adjNode : adj[i]) {
-                mp[colors[adjNode]]++;
-            }
-
-            if (adj[i].size() > 3) {
+        for(auto e : edges)
+        {
+            int u = e[0];
+            int v = e[1];
+            if(col[u] == col[v])
                 return -1;
-            }
 
-            if (adj[i].size() == 3) {
-
-                if (mp.size() < 3) {
+            if(mp[col[u]] == col[v])
+            {
+                if(inDegree[v] == 1)
                     return -1;
-                }
-
-            } else if (adj[i].size() == 2) {
-
-                if (mp.size() == 2) {
-
-                    if (root != -1) {
-                        return -1;
-                    }
-
-                    root = i;
-                } else {
-                    if (mp.size() != 3)
-                        return -1;
-                }
-            } else {
-
-                if (mp.size() == 1) {
+                inDegree[v] = 1;
+                adj[u].push_back(v);
+                if(adj[u].size() > 2)
                     return -1;
-                }
-
-                possibles.push_back(i);
+            } 
+            else
+            {
+                if(inDegree[u] == 1)
+                    return -1;
+                inDegree[u] = 1;
+                adj[v].push_back(u);
+                if(adj[v].size() > 2)
+                    return -1; 
             }
         }
-
-        if (root == -1) {
-
-            for (int node : possibles) {
-                if (check(node, -1, adj, color)) {
-                    return node;
-                }
-            }
-
-            return -1;
+        
+        int res;
+        for(int u = 0; u < n; u++)
+        {
+            if(inDegree[u] == 0)
+                return u;
         }
-
-        return check(root, -1, adj, color) ? root : -1;
+        return -1;
     }
 };
